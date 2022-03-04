@@ -23,12 +23,17 @@
 
 import pandas as pd
 
-df = pd.DataFrame({'firstName': ['Neil', 'Drake', 'Jonas'],'lastName': ['Chiruvella', 'Eidukas', 'Giver'],
-                    'city': ['LA', 'Marina', 'Paradise'],
-                    'state': ['CA', 'CA', 'NA'],
-                    'zip': ['90292', '90292', '23534'],
-                    'ssn': ['XXX-XXX-XXXX', 'YYY-YYY-YYYY', 'ZZZ-ZZZ-ZZZZ'],
-                    'wholding': ['0', '0', '0'],
-                    'salary': ['$100,000', '$125,000', '$100']})
+df = pd.DataFrame(
+    {
+        "firstName": ["Neil", "Drake", "Jonas"],
+        "lastName": ["Chiruvella", "Eidukas", "Giver"],
+        "city": ["LA", "Marina", "Paradise"],
+        "state": ["CA", "CA", "NA"],
+        "zip": ["90292", "90292", "23534"],
+        "ssn": ["XXX-XXX-XXXX", "YYY-YYY-YYYY", "ZZZ-ZZZ-ZZZZ"],
+        "wholding": ["0", "0", "0"],
+        "salary": ["$100,000", "$125,000", "$100"],
+    }
+)
 
 print(df)

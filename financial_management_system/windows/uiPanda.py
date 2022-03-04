@@ -1,4 +1,3 @@
-from turtle import width
 from PyQt5 import uic
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication
@@ -6,10 +5,11 @@ from PyQt5.QtWidgets import QApplication
 import pandas as pd
 import sys
 
+
 class UiEmployee(QtWidgets.QTableWidget):
     def __init__(self, parent=None):
         super(UiEmployee, self).__init__(parent)
-        uic.loadUi('FinMngrEmployee.ui', self)
+        uic.loadUi("FinMngrEmployee.ui", self)
         self.loadData()
         self.returnEmpl.clicked.connect(self.retEmpl)
         self.show()
@@ -17,38 +17,50 @@ class UiEmployee(QtWidgets.QTableWidget):
     def retEmpl(self):
         self.close()
 
-    def addEmpl(dataF,listF):
+    def addEmpl(dataF, listF):
         for i in range(len(listF)):
             dataF[i].append(listF[i])
         # add employee to dataframe
 
-#    def remEmpl(dataF):
-        # remove employee from dataframe
+    #    def remEmpl(dataF):
+    # remove employee from dataframe
 
     def loadData(self):
-        dfEmployee = pd.DataFrame({'firstName': ['Neil', 'Drake', 'Jonas'],
-                            'lastName': ['Chiruvella', 'Eidukas', 'Giver'],
-                            'city': ['LA', 'Marina', 'Paradise'],
-                            'state': ['CA', 'CA', 'NA'],
-                            'zip': ['90292', '90292', '23534'],
-                            'ssn': ['XXX-XXX-XXXX', 'YYY-YYY-YYYY', 'ZZZ-ZZZ-ZZZZ'],
-                            'wholding': ['0', '0', '0'],
-                            'salary': ['$100,000', '$125,000', '$100']})
+        dfEmployee = pd.DataFrame(
+            {
+                "firstName": ["Neil", "Drake", "Jonas"],
+                "lastName": ["Chiruvella", "Eidukas", "Giver"],
+                "city": ["LA", "Marina", "Paradise"],
+                "state": ["CA", "CA", "NA"],
+                "zip": ["90292", "90292", "23534"],
+                "ssn": ["XXX-XXX-XXXX", "YYY-YYY-YYYY", "ZZZ-ZZZ-ZZZZ"],
+                "wholding": ["0", "0", "0"],
+                "salary": ["$100,000", "$125,000", "$100"],
+            }
+        )
         self.employeeTable.setRowCount(len(dfEmployee))
         for row in range(dfEmployee.shape[0]):
             for col in range(dfEmployee.shape[1]):
-                self.employeeTable.setItem(row, col, QtWidgets.QTableWidgetItem(dfEmployee[dfEmployee.columns[col]][row]))
-    
+                self.employeeTable.setItem(
+                    row,
+                    col,
+                    QtWidgets.QTableWidgetItem(
+                        dfEmployee[dfEmployee.columns[col]][row]
+                    ),
+                )
+
+
 class UiMain(QtWidgets.QMainWindow):
     def __init__(self, parent=None):
         super(UiMain, self).__init__(parent)
-        uic.loadUi('FinMngrMainWin.ui', self)
+        uic.loadUi("FinMngrMainWin.ui", self)
         self.pushButton.clicked.connect(self.EmplClick)
         self.show()
 
     def EmplClick(self):
-        self = UiEmployee(self)      
+        self = UiEmployee(self)
         self.show()
+
 
 # main
 app = QApplication(sys.argv)
@@ -76,4 +88,3 @@ try:
     sys.exit(app.exec_())
 except:
     print("Exiting")
-
