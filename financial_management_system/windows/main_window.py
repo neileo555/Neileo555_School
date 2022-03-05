@@ -1,55 +1,15 @@
-from PyQt5 import uic, QtWidgets
-
 import pathlib
-import pandas as pd
+from importlib import resources
 
-
-class UiEmployee(QtWidgets.QTableWidget):
-    def __init__(self, parent=None):
-        super(UiEmployee, self).__init__(parent)
-        uic.loadUi(self.template_path, self)
-        self.loadData()
-        self.returnEmpl.clicked.connect(self.retEmpl)
-        self.show()
-
-    @property
-    def template_path(self) -> pathlib.Path:
-        """ """
-
-        return pathlib.Path(__file__).parent.parent / "templates/FinMngrEmployee.ui"
-
-    def retEmpl(self):
-        self.close()
-
-    def addEmpl(dataF, listF):
-        for i in range(len(listF)):
-            dataF[i].append(listF[i])
-        # add employee to dataframe
-
-    #    def remEmpl(dataF):
-    # remove employee from dataframe
-
-    def loadData(self):
-        dfEmployee = pd.DataFrame(
-            {
-                "firstName": ["Neil", "Drake", "Jonas"],
-                "lastName": ["Chiruvella", "Eidukas", "Giver"],
-                "city": ["LA", "Marina", "Paradise"],
-                "state": ["CA", "CA", "NA"],
-                "zip": ["90292", "90292", "23534"],
-                "ssn": ["XXX-XXX-XXXX", "YYY-YYY-YYYY", "ZZZ-ZZZ-ZZZZ"],
-                "wholding": ["0", "0", "0"],
-                "salary": ["$100,000", "$125,000", "$100"],
-            }
-        )
-        self.employeeTable.setRowCount(len(dfEmployee))
-        for row in range(dfEmployee.shape[0]):
-            for col in range(dfEmployee.shape[1]):
-                self.employeeTable.setItem(
-                    row,
-                    col,
-                    QtWidgets.QTableWidgetItem(dfEmployee[dfEmployee.columns[col]][row]),
-                )
+from PyQt5 import QtWidgets, uic
+from financial_management_system.database import MainDatabase
+from financial_management_system.windows import (
+    customer_management_window,
+    employee_management_window,
+    financial_management_window,
+    inventory_management_window,
+    vendor_management_window,
+)
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -58,17 +18,69 @@ class MainWindow(QtWidgets.QMainWindow):
 
         super().__init__(parent)
 
+        # Set up base database
+        self.database = MainDatabase()
+
+        # Render from Template
         uic.loadUi(self.template_path, self)
 
-        self.pushButton.clicked.connect(self.EmplClick)
-        self.show()
+        # Set up Buttons
+        self.customer_management_button.clicked.connect(self.handle_customer_management_click)
+        self.employee_management_button.clicked.connect(self.handle_employee_management_click)
+        self.vendor_management_button.clicked.connect(self.handle_vendor_management_click)
+        self.financial_management_button.clicked.connect(self.handle_financial_management_click)
+        self.inventory_management_button.clicked.connect(self.handle_inventory_management_click)
+
+        # Set up child pages
+        self.customer_management_window = None
+        self.employee_management_window = None
+        self.vendor_management_window = None
+        self.financial_management_window = None
+        self.inventory_management_window = None
 
     @property
     def template_path(self) -> pathlib.Path:
         """ """
 
-        return pathlib.Path(__file__).parent.parent / "templates/FinMngrMainWin.ui"
+        with resources.path("financial_management_system.templates", "main_window.ui") as template:
+            return template
 
-    def EmplClick(self):
-        self = UiEmployee(self)
-        self.show()
+    #########################
+    # Handle Button Presses #
+    #########################
+
+    def handle_customer_management_click(self) -> None:
+        """ """
+
+        self.customer_management_window = customer_management_window.CustomerManagementWindow(
+            database=self.database
+        )
+        self.customer_management_window.show()
+
+    def handle_employee_management_click(self) -> None:
+        """ """
+        self.employee_management_window = employee_management_window.EmployeeManagementWindow(
+            database=self.database
+        )
+        self.employee_management_window.show()
+
+    def handle_vendor_management_click(self) -> None:
+        """ """
+        self.vendor_management_window = vendor_management_window.VendorManagementWindow(
+            database=self.database
+        )
+        self.vendor_management_window.show()
+
+    def handle_financial_management_click(self) -> None:
+        """ """
+        self.financial_management_window = financial_management_window.FinancialManagementWindow(
+            database=self.database
+        )
+        self.financial_management_window.show()
+
+    def handle_inventory_management_click(self) -> None:
+        """ """
+        self.inventory_management_window = inventory_management_window.InventoryManagementWindow(
+            database=self.database
+        )
+        self.inventory_management_window.show()
