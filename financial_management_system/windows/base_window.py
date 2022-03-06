@@ -1,7 +1,3 @@
-"""
-"""
-
-import abc
 import pathlib
 import typing
 
@@ -10,9 +6,9 @@ from PyQt5 import QtCore, QtWidgets, uic
 
 
 class BaseWindow(QtWidgets.QWidget):
-    def __init__(
-        self, database: MainDatabase, parent: typing.Optional[QtWidgets.QWidget] = None
-    ):
+    """Base class for working with QWidgets."""
+
+    def __init__(self, database: MainDatabase, parent: typing.Optional[QtWidgets.QWidget] = None):
 
         super().__init__(parent)
 
@@ -46,3 +42,18 @@ class BaseWindow(QtWidgets.QWidget):
     @property
     def database(self) -> MainDatabase:
         return self._database
+
+    def show_warning(
+        self,
+        message: str = "Something went wrong",
+        text: str = "Error",
+        title: str = "Error",
+    ) -> None:
+        """Show a warning to the user."""
+
+        msg = QtWidgets.QMessageBox(self)
+        msg.setIcon(QtWidgets.QMessageBox.Critical)
+        msg.setInformativeText(message)
+        msg.setText(text)
+        msg.setWindowTitle(title)
+        msg.exec_()
