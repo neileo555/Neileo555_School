@@ -1,3 +1,4 @@
+from email.mime import base
 from os import stat
 import pathlib
 import typing
@@ -5,39 +6,20 @@ from importlib import resources
 
 from financial_management_system.data_types import Employee
 from financial_management_system.database import MainDatabase
+from financial_management_system.windows import base_window
 from PyQt5 import QtWidgets, uic, QtCore
 
 
-class AddEmployeeWindow(QtWidgets.QWidget):
+class AddEmployeeWindow(base_window.BaseWindow):
     """ """
 
     def __init__(self, database: MainDatabase, parent: typing.Optional[QtWidgets.QWidget] = None):
         """ """
-        super().__init__(parent)
-
-        # Store Database Reference
-        self.database = database
-
-        # Render from Template
-        uic.loadUi(self.template_path, self)
+        super().__init__(database, parent)
 
         # Hook up confirm / cancel buttons
         self.confirmation_box.accepted.connect(self.handle_accept_new_employee)
         self.confirmation_box.rejected.connect(self.handle_reject_new_employee)
-
-        # Close child popups when this closes
-        self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
-
-        # Set margins to be nonexistent
-        self.setContentsMargins(0, 0, 0, 0)
-
-        # Tell QT that this window should be a popup window with its own "x button" that should be movable
-        self.setWindowFlags(QtCore.Qt.Dialog)
-
-        # Move the dialog to the widget that called it
-        point = self.parent().rect().topRight()
-        global_point = self.parent().mapToGlobal(point)
-        self.move(global_point - QtCore.QPoint(self.width(), 0))
 
     @property
     def template_path(self) -> pathlib.Path:
@@ -121,35 +103,15 @@ class AddEmployeeWindow(QtWidgets.QWidget):
         self.close()
 
 
-class EmployeeManagementWindow(QtWidgets.QWidget):
+class EmployeeManagementWindow(base_window.BaseWindow):
     """ """
 
     def __init__(self, database: MainDatabase, parent: typing.Optional[QtWidgets.QWidget] = None):
         """ """
-        super().__init__(parent)
-
-        # Store Database Reference
-        self.database = database
-
-        # Render from Template
-        uic.loadUi(self.template_path, self)
+        super().__init__(database, parent)
 
         # Make table select by rows instead of by cells
         self.employee_table.setSelectionBehavior(QtWidgets.QTableView.SelectRows)
-
-        # Close child popups when this closes
-        self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
-
-        # Set margins to be nonexistent
-        self.setContentsMargins(0, 0, 0, 0)
-
-        # Tell QT that this window should be a popup window with its own "x button" that should be movable
-        self.setWindowFlags(QtCore.Qt.Dialog)
-
-        # Move the dialog to the widget that called it
-        point = self.parent().rect().topRight()
-        global_point = self.parent().mapToGlobal(point)
-        self.move(global_point - QtCore.QPoint(self.width(), 0))
 
         # Set up buttons
         self.add_employee_button.clicked.connect(self.handle_add_employee_click)

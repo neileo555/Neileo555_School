@@ -14,32 +14,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>770</y>
-      <width>311</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>List Employees</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_2">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>730</y>
-      <width>311</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Add Employees</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>

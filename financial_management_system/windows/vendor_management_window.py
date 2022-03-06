@@ -3,30 +3,16 @@ from importlib import resources
 import typing
 
 from financial_management_system.database import MainDatabase
+from financial_management_system.windows import base_window
 from PyQt5 import QtWidgets, uic, QtCore
 
 
-class VendorManagementWindow(QtWidgets.QWidget):
+class VendorManagementWindow(base_window.BaseWindow):
     """ """
 
     def __init__(self, database: MainDatabase, parent: typing.Optional[QtWidgets.QWidget] = None):
         """ """
-        super().__init__(parent)
-
-        # Store Database Reference
-        self.database = database
-
-        # Render from Template
-        uic.loadUi(self.template_path, self)
-
-        # Close child popups when this closes
-        self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
-
-        # Set margins to be nonexistent
-        self.setContentsMargins(0, 0, 0, 0)
-
-        # Tell QT that this window should be a popup window with its own "x button" that should be movable
-        self.setWindowFlags(QtCore.Qt.Dialog)
+        super().__init__(database, parent)
 
     @property
     def template_path(self) -> pathlib.Path:
