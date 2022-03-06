@@ -26,7 +26,7 @@ class BaseWindow(QtWidgets.QWidget):
         # Tell QT that this window should be a popup window with its own "x button" that should be movable
         self.setWindowFlags(QtCore.Qt.Dialog)
 
-        # Move the dialog to the widget that called it
+        # Move the dialog to the widget that spawned it
         if parent is not None:
             point = self.parent().rect().topRight()
             global_point = self.parent().mapToGlobal(point)
