@@ -20,7 +20,7 @@ class PurchaseOrderDatabase:
         Returns true if a unique purchase order was added, or false if already present.
         """
 
-        with self.lock:
+        with self._lock:
             if purchase_order.purchase_order_id in self._purchase_orders:
                 return False
             else:

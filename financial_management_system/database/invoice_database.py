@@ -21,7 +21,7 @@ class InvoiceDatabase:
         Returns true if a unique invoice was added, or false if already present.
         """
 
-        with self.lock:
+        with self._lock:
             if invoice.invoice_id in self._invoices:
                 return False
             else:

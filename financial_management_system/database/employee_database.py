@@ -23,11 +23,11 @@ class EmployeeDatabase:
         A ValueError is raised if the SSN is not unique!
         """
 
-        with self.lock:
+        with self._lock:
             if employee.employee_id in self._employees:
                 return False
 
-            for tracked_employee in self._employees:
+            for tracked_employee in self._employees.values():
                 if tracked_employee.ssn == employee.ssn:
                     raise ValueError(
                         f"Cannot add employee with ssn {employee.ssn}-- already exists: {tracked_employee}!"
@@ -62,4 +62,8 @@ class EmployeeDatabase:
         """Return a list of tracked employees, sorted alphabetically by last name."""
 
         with self._lock:
-            return [*sorted(self._employees.values(), key=operator.attrgetter("name"))]
+            return [
+                *sorted(
+                    self._employees.values(), key=operator.attrgetter("first_name", "last_name")
+                )
+            ]

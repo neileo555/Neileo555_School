@@ -1,7 +1,7 @@
 import pathlib
 from importlib import resources
 
-from PyQt5 import QtWidgets, uic
+from PyQt5 import QtWidgets, uic, QtCore
 from financial_management_system.database import MainDatabase
 from financial_management_system.windows import (
     customer_management_window,
@@ -23,6 +23,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Render from Template
         uic.loadUi(self.template_path, self)
+
+        # Close child popups when this closes
+        self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
 
         # Set up Buttons
         self.customer_management_button.clicked.connect(self.handle_customer_management_click)
@@ -53,34 +56,34 @@ class MainWindow(QtWidgets.QMainWindow):
         """ """
 
         self.customer_management_window = customer_management_window.CustomerManagementWindow(
-            database=self.database
+            database=self.database, parent=self
         )
         self.customer_management_window.show()
 
     def handle_employee_management_click(self) -> None:
         """ """
         self.employee_management_window = employee_management_window.EmployeeManagementWindow(
-            database=self.database
+            database=self.database, parent=self
         )
         self.employee_management_window.show()
 
     def handle_vendor_management_click(self) -> None:
         """ """
         self.vendor_management_window = vendor_management_window.VendorManagementWindow(
-            database=self.database
+            database=self.database, parent=self
         )
         self.vendor_management_window.show()
 
     def handle_financial_management_click(self) -> None:
         """ """
         self.financial_management_window = financial_management_window.FinancialManagementWindow(
-            database=self.database
+            database=self.database, parent=self
         )
         self.financial_management_window.show()
 
     def handle_inventory_management_click(self) -> None:
         """ """
         self.inventory_management_window = inventory_management_window.InventoryManagementWindow(
-            database=self.database
+            database=self.database, parent=self
         )
         self.inventory_management_window.show()
