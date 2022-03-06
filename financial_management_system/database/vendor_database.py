@@ -1,7 +1,9 @@
-from financial_management_system.data_types import Vendor
+import contextlib
+import operator
 import threading
 import typing
-import operator
+
+from financial_management_system.data_types import Vendor
 
 
 class VendorDatabase:
@@ -52,3 +54,8 @@ class VendorDatabase:
 
         with self._lock:
             return [*sorted(self._vendors.values(), key=operator.attrgetter("name"))]
+
+    @contextlib.contextmanager
+    def lock(self):
+        with self._lock:
+            yield

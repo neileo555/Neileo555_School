@@ -1,6 +1,7 @@
 """
 """
 
+import contextlib
 import typing
 
 from financial_management_system.data_types import (
@@ -63,6 +64,11 @@ class MainDatabase:
 
         return self._customer_database.customers
 
+    @contextlib.contextmanager
+    def customer_lock(self):
+        with self._customer_database.lock():
+            yield
+
     ####################
     # Employee Methods #
     ####################
@@ -103,6 +109,11 @@ class MainDatabase:
 
         return self._employee_database.employees
 
+    @contextlib.contextmanager
+    def employee_lock(self):
+        with self._employee_database.lock():
+            yield
+
     ###################
     # Invoice Methods #
     ###################
@@ -141,6 +152,11 @@ class MainDatabase:
 
         return self._invoice_database.invoices
 
+    @contextlib.contextmanager
+    def invoice_lock(self):
+        with self._invoice_database.lock():
+            yield
+
     ##########################
     # Purchase Order Methods #
     ##########################
@@ -159,9 +175,7 @@ class MainDatabase:
         """Return true if the purchase order with the given ID is tracked in the database."""
         return self._purchase_order_database.has_purchase_order(purchase_order_id)
 
-    def get_purchase_order(
-        self, purchase_order_id: str
-    ) -> typing.Optional[PurchaseOrder]:
+    def get_purchase_order(self, purchase_order_id: str) -> typing.Optional[PurchaseOrder]:
         """Return the tracked purchase order with the given ID, or None if there exists no such purchase_order."""
         return self._purchase_order_database.get_purchase_order(purchase_order_id)
 
@@ -175,6 +189,11 @@ class MainDatabase:
     def purchase_orders(self) -> typing.List[PurchaseOrder]:
         """Return a list of tracked purchase orders, sorted alphabetically by last name."""
         return self._purchase_order_database.purchase_orders
+
+    @contextlib.contextmanager
+    def purchase_order_lock(self):
+        with self._purchase_order_database.lock():
+            yield
 
     ##################
     # Vendor Methods #
@@ -203,3 +222,8 @@ class MainDatabase:
     def vendors(self) -> typing.List[Vendor]:
         """Return a list of tracked vendors, sorted alphabetically by name."""
         return self._vendor_database.vendors
+
+    @contextlib.contextmanager
+    def vendor_lock(self):
+        with self._vendor_database.lock():
+            yield

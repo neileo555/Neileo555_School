@@ -1,3 +1,4 @@
+import contextlib
 import operator
 import threading
 import typing
@@ -55,3 +56,8 @@ class InvoiceDatabase:
 
         with self._lock:
             return [*sorted(self._invoices.values(), key=operator.attrgetter("date"))]
+
+    @contextlib.contextmanager
+    def lock(self):
+        with self._lock:
+            yield

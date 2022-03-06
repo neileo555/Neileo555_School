@@ -1,3 +1,4 @@
+import contextlib
 import operator
 import threading
 import typing
@@ -68,3 +69,8 @@ class EmployeeDatabase:
                     key=operator.attrgetter("first_name", "last_name"),
                 )
             ]
+
+    @contextlib.contextmanager
+    def lock(self):
+        with self._lock:
+            yield

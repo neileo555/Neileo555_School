@@ -1,3 +1,4 @@
+import contextlib
 import operator
 import threading
 import typing
@@ -53,3 +54,8 @@ class CustomerDatabase:
 
         with self._lock:
             return [*sorted(self._customers.values(), key=operator.attrgetter("name"))]
+
+    @contextlib.contextmanager
+    def lock(self):
+        with self._lock:
+            yield
