@@ -10,7 +10,9 @@ from PyQt5 import QtCore, QtWidgets, uic
 
 
 class BaseWindow(QtWidgets.QWidget):
-    def __init__(self, database: MainDatabase, parent: typing.Optional[QtWidgets.QWidget] = None):
+    def __init__(
+        self, database: MainDatabase, parent: typing.Optional[QtWidgets.QWidget] = None
+    ):
 
         super().__init__(parent)
 

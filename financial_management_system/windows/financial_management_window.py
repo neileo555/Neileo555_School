@@ -10,7 +10,9 @@ from PyQt5 import QtWidgets, uic, QtCore
 class FinancialManagementWindow(base_window.BaseWindow):
     """ """
 
-    def __init__(self, database: MainDatabase, parent: typing.Optional[QtWidgets.QWidget] = None):
+    def __init__(
+        self, database: MainDatabase, parent: typing.Optional[QtWidgets.QWidget] = None
+    ):
         """ """
         super().__init__(database, parent)
 

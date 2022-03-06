@@ -15,4 +15,6 @@ class PurchaseOrder:
     vendor_id: int
     description: str = ""
 
-    purchase_order_id: str = dataclasses.field(default_factory=lambda: str(uuid.uuid4()))
+    purchase_order_id: str = dataclasses.field(
+        default_factory=lambda: str(uuid.uuid4())
+    )

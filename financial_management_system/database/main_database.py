@@ -13,7 +13,9 @@ from financial_management_system.data_types import (
 from financial_management_system.database.customer_database import CustomerDatabase
 from financial_management_system.database.employee_database import EmployeeDatabase
 from financial_management_system.database.invoice_database import InvoiceDatabase
-from financial_management_system.database.purchase_order_database import PurchaseOrderDatabase
+from financial_management_system.database.purchase_order_database import (
+    PurchaseOrderDatabase,
+)
 from financial_management_system.database.vendor_database import VendorDatabase
 
 
@@ -157,7 +159,9 @@ class MainDatabase:
         """Return true if the purchase order with the given ID is tracked in the database."""
         return self._purchase_order_database.has_purchase_order(purchase_order_id)
 
-    def get_purchase_order(self, purchase_order_id: str) -> typing.Optional[PurchaseOrder]:
+    def get_purchase_order(
+        self, purchase_order_id: str
+    ) -> typing.Optional[PurchaseOrder]:
         """Return the tracked purchase order with the given ID, or None if there exists no such purchase_order."""
         return self._purchase_order_database.get_purchase_order(purchase_order_id)
 

@@ -32,7 +32,9 @@ class PurchaseOrderDatabase:
         with self._lock:
             return purchase_order_id in self._purchase_orders
 
-    def get_purchase_order(self, purchase_order_id: str) -> typing.Optional[PurchaseOrder]:
+    def get_purchase_order(
+        self, purchase_order_id: str
+    ) -> typing.Optional[PurchaseOrder]:
         """Return the tracked purchase order with the given ID, or None if there exists no such purchase_order."""
         with self._lock:
             return self._purchase_orders.get(purchase_order_id)
@@ -53,4 +55,6 @@ class PurchaseOrderDatabase:
         """Return a list of tracked purchase orders, sorted alphabetically by last name."""
 
         with self._lock:
-            return [*sorted(self._purchase_orders.values(), key=operator.attrgetter("date"))]
+            return [
+                *sorted(self._purchase_orders.values(), key=operator.attrgetter("date"))
+            ]

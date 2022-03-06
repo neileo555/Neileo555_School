@@ -28,11 +28,21 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
 
         # Set up Buttons
-        self.customer_management_button.clicked.connect(self.handle_customer_management_click)
-        self.employee_management_button.clicked.connect(self.handle_employee_management_click)
-        self.vendor_management_button.clicked.connect(self.handle_vendor_management_click)
-        self.financial_management_button.clicked.connect(self.handle_financial_management_click)
-        self.inventory_management_button.clicked.connect(self.handle_inventory_management_click)
+        self.customer_management_button.clicked.connect(
+            self.handle_customer_management_click
+        )
+        self.employee_management_button.clicked.connect(
+            self.handle_employee_management_click
+        )
+        self.vendor_management_button.clicked.connect(
+            self.handle_vendor_management_click
+        )
+        self.financial_management_button.clicked.connect(
+            self.handle_financial_management_click
+        )
+        self.inventory_management_button.clicked.connect(
+            self.handle_inventory_management_click
+        )
 
         # Set up child pages
         self.customer_management_window = None
@@ -45,7 +55,9 @@ class MainWindow(QtWidgets.QMainWindow):
     def template_path(self) -> pathlib.Path:
         """ """
 
-        with resources.path("financial_management_system.templates", "main_window.ui") as template:
+        with resources.path(
+            "financial_management_system.templates", "main_window.ui"
+        ) as template:
             return template
 
     #########################
@@ -55,15 +67,19 @@ class MainWindow(QtWidgets.QMainWindow):
     def handle_customer_management_click(self) -> None:
         """ """
 
-        self.customer_management_window = customer_management_window.CustomerManagementWindow(
-            database=self.database, parent=self
+        self.customer_management_window = (
+            customer_management_window.CustomerManagementWindow(
+                database=self.database, parent=self
+            )
         )
         self.customer_management_window.show()
 
     def handle_employee_management_click(self) -> None:
         """ """
-        self.employee_management_window = employee_management_window.EmployeeManagementWindow(
-            database=self.database, parent=self
+        self.employee_management_window = (
+            employee_management_window.EmployeeManagementWindow(
+                database=self.database, parent=self
+            )
         )
         self.employee_management_window.show()
 
@@ -76,14 +92,18 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def handle_financial_management_click(self) -> None:
         """ """
-        self.financial_management_window = financial_management_window.FinancialManagementWindow(
-            database=self.database, parent=self
+        self.financial_management_window = (
+            financial_management_window.FinancialManagementWindow(
+                database=self.database, parent=self
+            )
         )
         self.financial_management_window.show()
 
     def handle_inventory_management_click(self) -> None:
         """ """
-        self.inventory_management_window = inventory_management_window.InventoryManagementWindow(
-            database=self.database, parent=self
+        self.inventory_management_window = (
+            inventory_management_window.InventoryManagementWindow(
+                database=self.database, parent=self
+            )
         )
         self.inventory_management_window.show()

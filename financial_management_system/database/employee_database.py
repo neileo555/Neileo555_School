@@ -64,6 +64,7 @@ class EmployeeDatabase:
         with self._lock:
             return [
                 *sorted(
-                    self._employees.values(), key=operator.attrgetter("first_name", "last_name")
+                    self._employees.values(),
+                    key=operator.attrgetter("first_name", "last_name"),
                 )
             ]

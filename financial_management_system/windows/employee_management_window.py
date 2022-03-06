@@ -13,7 +13,9 @@ from PyQt5 import QtWidgets, uic, QtCore
 class AddEmployeeWindow(base_window.BaseWindow):
     """ """
 
-    def __init__(self, database: MainDatabase, parent: typing.Optional[QtWidgets.QWidget] = None):
+    def __init__(
+        self, database: MainDatabase, parent: typing.Optional[QtWidgets.QWidget] = None
+    ):
         """ """
         super().__init__(database, parent)
 
@@ -25,11 +27,16 @@ class AddEmployeeWindow(base_window.BaseWindow):
     def template_path(self) -> pathlib.Path:
         """Path to the .ui file to render this widget with."""
 
-        with resources.path("financial_management_system.templates", "add_employee.ui") as template:
+        with resources.path(
+            "financial_management_system.templates", "add_employee.ui"
+        ) as template:
             return template
 
     def show_warning(
-        self, message: str = "Something went wrong", text: str = "Error", title: str = "Error"
+        self,
+        message: str = "Something went wrong",
+        text: str = "Error",
+        title: str = "Error",
     ) -> None:
         """Show a warning to the user."""
 
@@ -85,10 +92,21 @@ class AddEmployeeWindow(base_window.BaseWindow):
         # Attempt to add the new employee to the database
         try:
             self.database.add_employee(
-                Employee(first_name, last_name, city, state, zip_code, ssn, withholdings, salary)
+                Employee(
+                    first_name,
+                    last_name,
+                    city,
+                    state,
+                    zip_code,
+                    ssn,
+                    withholdings,
+                    salary,
+                )
             )
         except Exception as ex:
-            self.show_warning(f"Could not add '{first_name} {last_name}' to the database: {ex}")
+            self.show_warning(
+                f"Could not add '{first_name} {last_name}' to the database: {ex}"
+            )
             return
 
         # Re-render the table
@@ -106,7 +124,9 @@ class AddEmployeeWindow(base_window.BaseWindow):
 class EmployeeManagementWindow(base_window.BaseWindow):
     """ """
 
-    def __init__(self, database: MainDatabase, parent: typing.Optional[QtWidgets.QWidget] = None):
+    def __init__(
+        self, database: MainDatabase, parent: typing.Optional[QtWidgets.QWidget] = None
+    ):
         """ """
         super().__init__(database, parent)
 
@@ -140,7 +160,9 @@ class EmployeeManagementWindow(base_window.BaseWindow):
         self.employee_table.setRowCount(len(self.table_employees))
         for idx, employee in enumerate(self.table_employees):
             for attr_idx, attr in enumerate(employee.table_attributes):
-                self.employee_table.setItem(idx, attr_idx, QtWidgets.QTableWidgetItem(str(attr)))
+                self.employee_table.setItem(
+                    idx, attr_idx, QtWidgets.QTableWidgetItem(str(attr))
+                )
 
     #########################
     # Handle Button Presses #
@@ -149,7 +171,9 @@ class EmployeeManagementWindow(base_window.BaseWindow):
     def handle_add_employee_click(self) -> None:
         """ """
 
-        self.add_employee_window = AddEmployeeWindow(database=self.database, parent=self)
+        self.add_employee_window = AddEmployeeWindow(
+            database=self.database, parent=self
+        )
         self.add_employee_window.show()
 
     def handle_remove_employee_click(self) -> None:
